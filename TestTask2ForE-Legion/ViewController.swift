@@ -14,11 +14,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var myCoordinatesLabel: UILabel!
     @IBOutlet weak var table: UITableView!
     
-    var isSelected: Bool = false
-    var selectedCellIndex = 0
+    var isSelected: Bool = false  //флаг выделеня ячейки
+    var selectedCellIndex = 0 //индекс выделенной ячейки
     var timer: Timer?  //создаем таймер
     let locationManager = CLLocationManager()
-    var myFriends = [People]()
+    var myFriends = [People]() //получение данных в реальном проекте лучше делать во viewModel, а потом уже передавать во view
     var myCoordinates = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
     
     // MARK: - Life cycle
@@ -91,7 +91,7 @@ extension ViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = table.dequeueReusableCell(withIdentifier: MyTableViewCell.identifire, for: indexPath) as! MyTableViewCell
+        let cell = table.dequeueReusableCell(withIdentifier: MyTableViewCell.identifire, for: indexPath) as! MyTableViewCell
 
         let myLoc = CLLocation(latitude: myCoordinates.latitude,
                                longitude: myCoordinates.longitude)
@@ -112,6 +112,7 @@ extension ViewController: UITableViewDataSource {
         return cell
     }
     
+    //реализовал выделение ячейки
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if !isSelected {
