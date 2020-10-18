@@ -97,9 +97,18 @@ extension ViewController: UITableViewDataSource {
                                longitude: myCoordinates.longitude)
         let friendLoc = CLLocation(latitude: myFriends[indexPath.row].coordinate.latitude,
                                    longitude: myFriends[indexPath.row].coordinate.longitude)
-        cell.setup(name: String(myFriends[indexPath.row].name!),
-                   distanse: String((myLoc.distance(from: friendLoc) / 1000 / 2).rounded(toPlaces: 2)) + " км",
-                   image: String(myFriends[indexPath.row].info))
+        
+        if isSelected {
+            let currentLoc = CLLocation(latitude: myFriends[selectedCellIndex].coordinate.latitude,
+                                        longitude: myFriends[selectedCellIndex].coordinate.longitude)
+            cell.setup(name: String(myFriends[indexPath.row].name!),
+                       distanse: String((currentLoc.distance(from: friendLoc) / 1000 / 2).rounded(toPlaces: 2)) + " км",
+                       image: String(myFriends[indexPath.row].info))
+        } else {
+            cell.setup(name: String(myFriends[indexPath.row].name!),
+                       distanse: String((myLoc.distance(from: friendLoc) / 1000 / 2).rounded(toPlaces: 2)) + " км",
+                       image: String(myFriends[indexPath.row].info))
+        }
         return cell
     }
     
