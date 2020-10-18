@@ -14,6 +14,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var myCoordinatesLabel: UILabel!
     @IBOutlet weak var table: UITableView!
     
+    var isSelected: Bool = false
+    var selectedCellIndex = 0
     var timer: Timer?  //создаем таймер
     let locationManager = CLLocationManager()
     var myFriends = [People]()
@@ -26,17 +28,7 @@ class ViewController: UIViewController {
         setupUI()
         myDest()
         setupTableView()
-        
-        
-        //let gesture = UITapGestureRecognizer(target: self, action:  #selector (self.checkAction(sender:)))
-        //table.addGestureRecognizer(gesture)
     }
-//    @objc func checkAction(sender : UITapGestureRecognizer) {
-//        if let indexPath = table.indexPathForSelectedRow{
-//            table.selectRow(at: indexPath, animated: true, scrollPosition: .middle)
-//            table.delegate?.tableView!(table, didSelectRowAt: indexPath)
-//            }
-//    }
     
     // MARK: - Funcs
     func createTimer() {
@@ -113,6 +105,22 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        if !isSelected {
+            let cell = table.cellForRow(at: indexPath)
+            selectedCellIndex = indexPath.row
+            isSelected = true
+            cell?.layer.borderWidth = 1.0
+            cell?.layer.borderColor = UIColor.red.cgColor
+            table.reloadData()
+        } else
+        if isSelected && (selectedCellIndex == indexPath.row) {
+            let cell = table.cellForRow(at: indexPath)
+            selectedCellIndex = indexPath.row
+            isSelected = false
+            cell?.layer.borderWidth = 1.0
+            cell?.layer.borderColor = UIColor.clear.cgColor
+            table.reloadData()
+        }
     }
 }
 
