@@ -11,8 +11,7 @@ import UIKit
 
 // Заглушка для сетевого запроса списка друзей
 func loadingFriends(completion : @escaping ([People]) -> Void) {
-    let myFriends = randomizeDest()
-    completion(myFriends)
+    completion(randomizeDest())
 }
 
 // Генерация списка друзей
