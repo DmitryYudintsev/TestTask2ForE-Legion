@@ -15,23 +15,37 @@ class ViewController: UIViewController {
     @IBOutlet weak var myCoordinatesLabel: UILabel!
     @IBOutlet weak var table: UITableView!
     
+    var timer: Timer?  //создаем таймер
     let locationManager = CLLocationManager()
     var myFriends = [People]()
     var myCoordinates = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //в реальном проекте этот метод нужно вынести во ViewModel
-        loadingFriends { peoples in
-            self.myFriends = peoples
-            self.table.reloadData()
-        }
+        createTimer()
         setupUI()
         myDest()
         setupTableView()
     }
     // MARK: - Funcs
+    
+    func createTimer() {
+        if timer == nil {
+            timer = Timer.scheduledTimer(timeInterval: 3,
+                                         target: self,
+                                         selector: #selector(updateTimer),
+                                         userInfo: nil,
+                                         repeats: true)
+        }
+    }
+    
+    @objc func updateTimer() {
+        //в реальном проекте этот метод нужно вынести во ViewModel
+        loadingFriends { peoples in
+            self.myFriends = peoples
+            self.table.reloadData()
+        }
+    }
     
     //fetch my destination
     func myDest() {
@@ -68,7 +82,7 @@ extension ViewController: CLLocationManagerDelegate {
         myCoordinatesLabel?.text = "\(locValue.latitude.rounded(toPlaces: 5))" + " " + "\(locValue.longitude.rounded(toPlaces: 5))"
     }
 }
-
+// MARK: - Extention UITableViewDataSource
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return myFriends.count
@@ -78,18 +92,21 @@ extension ViewController: UITableViewDataSource {
         var cell = table.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell = UITableViewCell(style: .value1, reuseIdentifier: "cell")
         cell.textLabel?.text = String(myFriends[indexPath.row].name!)
+        
+        //Cделал заглушку для аватарки, в реальном проекте обычно прилетает урл,
+        //который потом нужно подгрузить асинхронно
         cell.imageView?.image = UIImage(named: "placeholder.png")
 
-        let loc1 = CLLocation(latitude: myCoordinates.latitude, longitude: myCoordinates.longitude)
-        let loc2 = CLLocation(latitude: myFriends[indexPath.row].coordinate.latitude, longitude: myFriends[indexPath.row].coordinate.longitude)
-        cell.detailTextLabel?.text = String((loc1.distance(from: loc2) / 1000 / 2).rounded(toPlaces: 2))
+        let myLoc = CLLocation(latitude: myCoordinates.latitude, longitude: myCoordinates.longitude)
+        let friendLoc = CLLocation(latitude: myFriends[indexPath.row].coordinate.latitude, longitude: myFriends[indexPath.row].coordinate.longitude)
+        cell.detailTextLabel?.text = String((myLoc.distance(from: friendLoc) / 1000 / 2).rounded(toPlaces: 2)) + " км"
 
         return cell
     }
     
     
 }
-
+// MARK: - Extention UITableViewDelegate
 extension ViewController: UITableViewDelegate {
     
 }
