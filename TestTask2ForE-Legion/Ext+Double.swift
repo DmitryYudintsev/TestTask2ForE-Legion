@@ -7,7 +7,7 @@
 
 import Foundation
 
-
+//Расширил тип чтобы можно было удобно округлять широту и долготу до нужного количества знаков
 extension Double {
     func rounded(toPlaces places:Int) -> Double {
         let divisor = pow(10.0, Double(places))

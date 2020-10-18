@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "3933849-emoji-emotion-emotional-face-peaceful_111621.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "3933849-emoji-emotion-emotional-face-peaceful_111621-1.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "3933849-emoji-emotion-emotional-face-peaceful_111621-2.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
