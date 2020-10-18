@@ -62,7 +62,7 @@ class ViewController: UIViewController {
     //configure Labels
     func setupUI() {
         myNameLabel.text = "Dmitry"
-        myNameLabel.textColor = .red
+        myNameLabel.textColor = .gray
         myNameLabel.textAlignment = .center
         myCoordinatesLabel?.textColor = .green
         myCoordinatesLabel?.textAlignment = .center
@@ -138,6 +138,28 @@ extension ViewController: UITableViewDataSource {
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerText = UILabel()
+        headerText.textColor = UIColor.gray
+        headerText.adjustsFontSizeToFitWidth = true
+        switch section{
+        case 0:
+            headerText.textAlignment = .center
+            if isSelected {
+                let headerName = myFriends[selectedCellIndex].name
+                let headerLat = Double(myFriends[selectedCellIndex].coordinate.latitude).rounded(toPlaces: 1)
+                let headerLon = Double(myFriends[selectedCellIndex].coordinate.longitude).rounded(toPlaces: 1)
+                headerText.text = headerName! + " Lat:" + String(headerLat) + " Lon:" + String(headerLon)
+            } else {
+                headerText.text = "Мои друзья"
+            }
+        default:
+            headerText.textAlignment = .left
+            headerText.text = "default"
+        }
+        return headerText
     }
 }
 

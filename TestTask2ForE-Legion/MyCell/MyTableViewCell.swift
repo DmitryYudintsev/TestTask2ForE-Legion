@@ -21,6 +21,8 @@ class MyTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         avatar.contentMode = .scaleAspectFit
+        nameLbl.textColor = .gray
+        distanceLbl.textColor = .gray
         // Initialization code
     }
 
