@@ -9,6 +9,7 @@ import Foundation
 import MapKit
 import UIKit
 
+
 class People: NSObject, MKAnnotation {
     var name: String?
     var coordinate: CLLocationCoordinate2D
