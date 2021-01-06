@@ -1,2 +1,2 @@
 # TestTask2ForE-Legion
-TestTask2ForE-Legion
+Тестовое задание для компании E-Legion.
